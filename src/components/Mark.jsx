@@ -1,10 +1,10 @@
 function Mark({ markNumber }) {
-	if (markNumber === -1) return <td></td>;
+	if (markNumber === -1) return;
 	if (markNumber === 0) {
-		return <td>O</td>;
+		return <>O</>;
 	}
 	if (markNumber === 1) {
-		return <td>X</td>;
+		return <>X</>;
 	}
 }
 
