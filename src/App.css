@@ -25,44 +25,50 @@
 
 .board td:hover {
   cursor: pointer;
-  background-color: aquamarine;
+  background-color: rgba(177, 207, 197, 0.247);
 }
 
-
-
 .board .first-row td:first-child {
-  border-right: 5px solid black;
-  border-bottom: 5px solid black;
+  border-right: 5px solid whitesmoke;
+  border-bottom: 5px solid whitesmoke;
 }
 
 .board .first-row td:nth-child(2){
-  border-bottom: 5px solid black;
+  border-bottom: 5px solid whitesmoke;
 }
 
 .board .first-row td:nth-child(3){
-  border-bottom: 5px solid black;
-  border-left: 5px solid black;
+  border-bottom: 5px solid whitesmoke;
+  border-left: 5px solid whitesmoke;
 }
 
 .board .second-row td:first-child {
-  border-right: 5px solid black;
-  border-bottom: 5px solid black;
+  border-right: 5px solid whitesmoke;
+  border-bottom: 5px solid whitesmoke;
 }
 
 .board .second-row td:nth-child(2){
-  border-bottom: 5px solid black;
+  border-bottom: 5px solid whitesmoke;
 }
 
 .board .second-row td:nth-child(3){
-  border-bottom: 5px solid black;
-  border-left: 5px solid black;
+  border-bottom: 5px solid whitesmoke;
+  border-left: 5px solid whitesmoke;
 }
 
 .board .third-row td:first-child {
-  border-right: 5px solid black;
+  border-right: 5px solid whitesmoke;
 }
 
 .board .third-row td:nth-child(3){
-  border-left: 5px solid black;
+  border-left: 5px solid whitesmoke;
 }
 
+
+.blue {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
