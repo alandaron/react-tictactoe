@@ -2,13 +2,11 @@ import { createContext, useState } from "react";
 const GameContext = createContext(null);
 
 export const GameContextProvider = (props) => {
-	const [gamesData, setGamesData] = useState([
-		{
-			player1Wins: 0,
-			player2Wins: 0,
-			ties: 0,
-		},
-	]);
+	const [gameData, setGameData] = useState({
+		player1Wins: 0,
+		player2Wins: 0,
+		ties: 0,
+	});
 	const [player1Data, setPlayer1Data] = useState({
 		wins: 0,
 		losses: 0,
@@ -33,7 +31,8 @@ export const GameContextProvider = (props) => {
 	return (
 		<GameContext.Provider
 			value={{
-				gamesData: gamesData,
+				gameData: gameData,
+				setGameData: setGameData,
 				player1Data: player1Data,
 				player2Data: player2Data,
 				changePlayer1Name: changePlayer1NameHandler,

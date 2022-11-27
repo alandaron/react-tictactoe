@@ -13,13 +13,9 @@ function Gameboard() {
 	const gameCtx = useContext(GameContext);
 
 	const [gameOver, setGameOver] = useState(false);
-	const [gameData, setGameData] = useState({
-		player1Wins: 0,
-		player2Wins: 0,
-		ties: 0,
-	});
 	const [board, setBoard] = useState(emptyBoard);
 
+	const [lastTurn, setLastTurn] = useState("X");
 	const [xTurn, setXTurn] = useState(true);
 	const [turns, setTurns] = useState(8);
 
@@ -34,23 +30,39 @@ function Gameboard() {
 
 		const winner = checkVictory();
 		if (winner === 0) {
-			setGameData({ ...gameData, player2Wins: gameData.player2Wins + 1 });
+			// O
+			gameCtx.setGameData({
+				...gameCtx.gameData,
+				player2Wins: gameCtx.gameData.player2Wins + 1,
+			});
 			setGameOver(true);
-			console.log("O WINS");
 		} else if (winner === 1) {
-			setGameData({ ...gameData, player1Wins: gameData.player1Wins + 1 });
+			// X
+			gameCtx.setGameData({
+				...gameCtx.gameData,
+				player1Wins: gameCtx.gameData.player1Wins + 1,
+			});
 			setGameOver(true);
-			console.log("X WINS");
 		} else if (turns === 0) {
-			setGameData({ ...gameData, ties: gameData.ties + 1 });
+			// TIE
+			gameCtx.setGameData({
+				...gameCtx.gameData,
+				ties: gameCtx.gameData.ties + 1,
+			});
 			setGameOver(true);
-			console.log("TIE");
 		}
 		setXTurn(!xTurn);
 		setTurns(turns - 1);
 	};
 
 	const replay = () => {
+		if (lastTurn === "X") {
+			setLastTurn("O");
+			setXTurn(false);
+		} else {
+			setLastTurn("X");
+			setXTurn(true);
+		}
 		setTurns(8);
 		setGameOver(false);
 		setBoard(emptyBoard);
@@ -188,16 +200,16 @@ function Gameboard() {
 			</table>
 			<div className="info">
 				<div className={xTurn || gameOver ? "active" : undefined}>
-					<div className="score">{gameData.player1Wins}</div>
+					<div className="score">{gameCtx.gameData.player1Wins}</div>
 					<div>PLAYER 1 (X)</div>
 					<div>{gameCtx.player1Data.name}</div>
 				</div>
 				<div className={gameOver ? "active" : undefined}>
-					<div className="score">{gameData.ties}</div>
+					<div className="score">{gameCtx.gameData.ties}</div>
 					<div>TIE</div>
 				</div>
 				<div className={!xTurn || gameOver ? "active" : undefined}>
-					<div className="score">{gameData.player2Wins}</div>
+					<div className="score">{gameCtx.gameData.player2Wins}</div>
 					<div>PLAYER 2 (O)</div>
 					<div>{gameCtx.player2Data.name}</div>
 				</div>
