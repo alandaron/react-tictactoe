@@ -4,13 +4,21 @@ import StartScreen from "../components/StartScreen";
 import GameContext from "../store/GameContext";
 
 function Gameboard() {
+	const emptyBoard = [
+		[-1, -1, -1],
+		[-1, -1, -1],
+		[-1, -1, -1],
+	]; // -1 empty; 0 - O; 1 - X;
+
 	const gameCtx = useContext(GameContext);
 
-	const [board, setBoard] = useState([
-		[-1, -1, -1],
-		[-1, -1, -1],
-		[-1, -1, -1],
-	]); // -1 empty; 0 - O; 1 - X;
+	const [gameOver, setGameOver] = useState(false);
+	const [gameData, setGameData] = useState({
+		player1Wins: 0,
+		player2Wins: 0,
+		ties: 0,
+	});
+	const [board, setBoard] = useState(emptyBoard);
 
 	const [xTurn, setXTurn] = useState(true);
 	const [turns, setTurns] = useState(8);
@@ -26,14 +34,26 @@ function Gameboard() {
 
 		const winner = checkVictory();
 		if (winner === 0) {
+			setGameData({ ...gameData, player2Wins: gameData.player2Wins + 1 });
+			setGameOver(true);
 			console.log("O WINS");
 		} else if (winner === 1) {
+			setGameData({ ...gameData, player1Wins: gameData.player1Wins + 1 });
+			setGameOver(true);
 			console.log("X WINS");
 		} else if (turns === 0) {
+			setGameData({ ...gameData, ties: gameData.ties + 1 });
+			setGameOver(true);
 			console.log("TIE");
 		}
 		setXTurn(!xTurn);
 		setTurns(turns - 1);
+	};
+
+	const replay = () => {
+		setTurns(8);
+		setGameOver(false);
+		setBoard(emptyBoard);
 	};
 
 	/* Prolly saab paremini ja ilusamalt teha */
@@ -130,7 +150,7 @@ function Gameboard() {
 	// Kontrollida, kas mängija nimed on sisestatud
 	if (gameCtx.player1Data.name === "" || gameCtx.player2Data.name === "") {
 		return (
-			<div>
+			<div className="start-screen">
 				<StartScreen />
 			</div>
 		);
@@ -139,6 +159,9 @@ function Gameboard() {
 	return (
 		<div className="board">
 			<table>
+				<button className={gameOver ? "replay-btn" : "hide"} onClick={replay}>
+					REPLAY
+				</button>
 				<tbody>
 					<tr className="first-row">
 						{board[0].map((element, i) => (
@@ -163,6 +186,22 @@ function Gameboard() {
 					</tr>
 				</tbody>
 			</table>
+			<div className="info">
+				<div className={xTurn || gameOver ? "active" : undefined}>
+					<div className="score">{gameData.player1Wins}</div>
+					<div>PLAYER 1 (X)</div>
+					<div>{gameCtx.player1Data.name}</div>
+				</div>
+				<div className={gameOver ? "active" : undefined}>
+					<div className="score">{gameData.ties}</div>
+					<div>TIE</div>
+				</div>
+				<div className={!xTurn || gameOver ? "active" : undefined}>
+					<div className="score">{gameData.player2Wins}</div>
+					<div>PLAYER 2 (O)</div>
+					<div>{gameCtx.player2Data.name}</div>
+				</div>
+			</div>
 		</div>
 	);
 }

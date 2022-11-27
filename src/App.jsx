@@ -6,16 +6,18 @@ import Scoreboard from "./pages/Scoreboard";
 function App() {
 	return (
 		<div>
-			<Link to="/">
-				<button>Gameboard</button>
-			</Link>
-			<Link to="/scoreboard">
-				<button>Scoreboard</button>
-			</Link>
 			<Routes>
 				<Route path="" element={<Gameboard />} />
 				<Route path="scoreboard" element={<Scoreboard />} />
 			</Routes>
+			<div className="nav">
+				<Link to="/">
+					<button>Gameboard</button>
+				</Link>
+				<Link to="/scoreboard">
+					<button>Scoreboard</button>
+				</Link>
+			</div>
 		</div>
 	);
 }
